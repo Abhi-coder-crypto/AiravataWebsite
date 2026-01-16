@@ -136,6 +136,14 @@ export async function registerRoutes(app: Express): Promise<Server> {
       let project;
       if (ObjectId.isValid(projectId)) {
         project = await db.collection("projects").findOne({ _id: new ObjectId(projectId) });
+      } else {
+        // Support lookup by slug if ID is not a valid ObjectId
+        project = await db.collection("projects").findOne({ 
+          $or: [
+            { slug: projectId },
+            { name: { $regex: new RegExp(`^${projectId.replace(/-/g, ' ')}$`, 'i') } }
+          ]
+        });
       }
 
       if (project) {
@@ -164,6 +172,14 @@ export async function registerRoutes(app: Express): Promise<Server> {
       let project;
       if (ObjectId.isValid(projectId)) {
         project = await db.collection("projects").findOne({ _id: new ObjectId(projectId) });
+      } else {
+        // Support lookup by slug if ID is not a valid ObjectId
+        project = await db.collection("projects").findOne({ 
+          $or: [
+            { slug: projectId },
+            { name: { $regex: new RegExp(`^${projectId.replace(/-/g, ' ')}$`, 'i') } }
+          ]
+        });
       }
 
       if (project) {
