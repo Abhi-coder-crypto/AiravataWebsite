@@ -76,7 +76,6 @@ export default function Projects() {
           />
         </motion.div>
 
-        {/* Change to 2 column grid for md/lg screens */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-16 max-w-6xl mx-auto">
           {projects.map((project, index) => (
             <motion.div
@@ -96,24 +95,10 @@ export default function Projects() {
                     />
                   </div>
 
-                  <div className="pt-6 flex flex-col flex-grow">
-                    <h3 className="text-2xl font-bold text-[#1a2b3c] mb-3 group-hover:text-blue-600 transition-colors">
+                  <div className="pt-6 flex flex-col items-center">
+                    <h3 className="text-xl md:text-2xl font-bold text-[#1a2b3c] group-hover:text-blue-600 transition-colors text-center">
                       {project.title}
                     </h3>
-                    <p className="text-gray-600 mb-6 line-clamp-3 text-base leading-relaxed flex-grow">
-                      {project.description}
-                    </p>
-
-                    <div className="flex flex-wrap gap-2">
-                      {project.tags.map((tag, idx) => (
-                        <span
-                          key={idx}
-                          className="px-4 py-1.5 bg-[#f0f7ff] text-[#0066cc] text-sm rounded-full font-medium"
-                        >
-                          {tag}
-                        </span>
-                      ))}
-                    </div>
                   </div>
                 </div>
               </Link>
