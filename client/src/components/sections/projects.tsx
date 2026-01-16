@@ -32,7 +32,7 @@ export default function Projects() {
       id: "prism-post-production-management-system",
       title: "PRISM Post Production Management System",
       description: "PRISM - ERP for post-production houses to handle booking, resources, and project tracking.",
-      image: "/attached_assets/Screenshot_2026-01-15_at_8.57.38_PM_1768490862776.png",
+      image: "/attached_assets/Screenshot_2026-01-16_132311_1768550004333.png",
       tags: ["React", "Node.js", "MongoDB", "Tailwind CSS"],
       serviceSlug: "software-development"
     },
@@ -40,7 +40,7 @@ export default function Projects() {
       id: "pos-restaurant-billing-software",
       title: "POS Restaurant Billing Software",
       description: "A comprehensive Point of Sale system tailored for restaurants with billing and inventory management.",
-      image: "/attached_assets/Screenshot_2026-01-15_at_8.57.38_PM_1768490862776.png",
+      image: "/attached_assets/Screenshot_2026-01-16_132316_1768550004333.png",
       tags: ["React", "Node.js", "MongoDB", "Tailwind CSS"],
       serviceSlug: "software-development"
     },
@@ -48,7 +48,7 @@ export default function Projects() {
       id: "online-training-gym-management-system",
       title: "Online Training/Gym Management System",
       description: "A comprehensive multi-role dashboard for gym owners, trainers, and clients to manage workouts and memberships.",
-      image: "/attached_assets/Screenshot_2026-01-02_at_4.06.02_PM_1767350165009.png",
+      image: "/attached_assets/image_1768549942313.png",
       tags: ["React", "Node.js", "MongoDB", "Tailwind CSS"],
       serviceSlug: "software-development"
     }
@@ -57,10 +57,7 @@ export default function Projects() {
   return (
     <section id="projects" className="py-20 bg-gradient-to-br from-gray-50 to-white">
       <div className="container mx-auto px-6">
-        {/* Header Section */}
-        <motion.div
-          className="text-center mb-12"
-        >
+        <motion.div className="text-center mb-12">
           <motion.h1
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -76,11 +73,7 @@ export default function Projects() {
           </motion.h1>
         </motion.div>
 
-        {/* Projects Grid */}
-        <motion.div
-          layout
-          className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto"
-        >
+        <motion.div layout className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
           {projects.map((project, index) => (
             <motion.div
               key={project.id}
@@ -92,14 +85,16 @@ export default function Projects() {
             >
               <Link href={`/projects/${project.serviceSlug}/${project.id}`}>
                 <div className="bg-white rounded-2xl shadow-xl overflow-hidden hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 cursor-pointer group h-full flex flex-col border border-gray-100">
-                  <div className="relative overflow-hidden aspect-video">
+                  <div className="relative overflow-hidden aspect-video border-b border-gray-100">
                     <img
                       src={project.image}
                       alt={project.title}
                       className="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
                     />
-                    <div className="absolute inset-0 bg-black/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                       <span className="px-6 py-2 bg-white/90 backdrop-blur-sm text-blue-600 rounded-full font-semibold shadow-lg scale-90 group-hover:scale-100 transition-transform duration-300">View Details</span>
+                    <div className="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                       <span className="px-6 py-2 bg-white/90 backdrop-blur-sm text-blue-600 rounded-full font-semibold shadow-lg scale-90 group-hover:scale-100 transition-transform duration-300 border border-blue-100">
+                         View Details
+                       </span>
                     </div>
                   </div>
 
