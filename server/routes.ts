@@ -199,6 +199,18 @@ export async function registerRoutes(app: Express): Promise<Server> {
     res.json(project);
   });
 
+  app.post("/api/projects/delete-by-slug", async (req, res) => {
+    try {
+      const db = await getDb();
+      const { slug } = req.body;
+      const result = await db.collection("projects").deleteOne({ slug });
+      res.json({ success: true, deletedCount: result.deletedCount });
+    } catch (error) {
+      console.error("Delete error:", error);
+      res.status(500).json({ error: "Failed to delete project" });
+    }
+  });
+
   app.post("/api/projects/sync-images", async (req, res) => {
     try {
       const db = await getDb();
