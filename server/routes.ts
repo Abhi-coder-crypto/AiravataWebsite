@@ -203,12 +203,25 @@ export async function registerRoutes(app: Express): Promise<Server> {
     try {
       const db = await getDb();
       const { slug, image, gallery } = req.body;
+      
+      // Upsert the project to ensure it exists with the correct images
       const result = await db.collection("projects").updateOne(
         { slug },
-        { $set: { image, gallery } }
+        { 
+          $set: { 
+            image, 
+            gallery,
+            // Ensure basic fields exist if it's a new insert
+            name: req.body.name || slug.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase()),
+            serviceSlug: req.body.serviceSlug || "website-development",
+            category: req.body.category || "website-development"
+          } 
+        },
+        { upsert: true }
       );
       res.json({ success: true, result });
     } catch (error) {
+      console.error("Sync error:", error);
       res.status(500).json({ error: "Failed to sync images" });
     }
   });
