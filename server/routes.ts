@@ -131,7 +131,13 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.get("/api/projects/:projectId", async (req, res) => {
     try {
       const db = await getDb();
-      const project = await db.collection("projects").findOne({ _id: new ObjectId(req.params.projectId) });
+      const projectId = req.params.projectId;
+      
+      let project;
+      if (ObjectId.isValid(projectId)) {
+        project = await db.collection("projects").findOne({ _id: new ObjectId(projectId) });
+      }
+
       if (project) {
         // Return all fields from MongoDB to the frontend
         return res.json({ 
@@ -153,7 +159,13 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.get("/api/projects/:serviceSlug/:projectId", async (req, res) => {
     try {
       const db = await getDb();
-      const project = await db.collection("projects").findOne({ _id: new ObjectId(req.params.projectId) });
+      const projectId = req.params.projectId;
+
+      let project;
+      if (ObjectId.isValid(projectId)) {
+        project = await db.collection("projects").findOne({ _id: new ObjectId(projectId) });
+      }
+
       if (project) {
         return res.json({ 
           ...project, 
