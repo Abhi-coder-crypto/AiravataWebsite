@@ -55,54 +55,51 @@ export default function Projects() {
   ];
 
   return (
-    <section id="projects" className="py-20 bg-gradient-to-br from-gray-50 to-white">
-      <div className="container mx-auto px-6">
-        <motion.div className="text-center mb-12">
+    <section id="projects" className="py-20 bg-white">
+      <div className="container mx-auto px-4">
+        <motion.div className="text-center mb-16">
           <motion.h1
-            initial={{ opacity: 0, y: 40 }}
+            initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, delay: 0.2, ease: "easeOut" }}
+            transition={{ duration: 0.8 }}
             viewport={{ once: true }}
-            className="text-4xl lg:text-7xl font-extralight text-gray-900 mb-8 tracking-tight leading-tight"
+            className="text-4xl md:text-5xl font-bold text-[#1a2b3c] mb-4"
           >
-            Our Services & Products
-            <br />
-            <span className="font-light bg-gradient-to-r from-blue-500 via-blue-500 to-cyan-500 bg-clip-text text-transparent">
-              for Business Growth
-            </span>
+            Featured Projects
           </motion.h1>
+          <motion.div
+            initial={{ opacity: 0, width: 0 }}
+            whileInView={{ opacity: 1, width: "80px" }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            viewport={{ once: true }}
+            className="h-1 bg-blue-600 mx-auto"
+          />
         </motion.div>
 
-        <motion.div layout className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
           {projects.map((project, index) => (
             <motion.div
               key={project.id}
-              initial={{ opacity: 0, scale: 0.9 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.6, delay: index * 0.1 }}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: index * 0.1 }}
               viewport={{ once: true }}
-              layout
             >
               <Link href={`/projects/${project.serviceSlug}/${project.id}`}>
-                <div className="bg-white rounded-2xl shadow-xl overflow-hidden hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 cursor-pointer group h-full flex flex-col border border-gray-100">
-                  <div className="relative overflow-hidden aspect-video border-b border-gray-100">
+                <div className="bg-white rounded-xl shadow-[0_4px_20px_rgba(0,0,0,0.08)] overflow-hidden border border-gray-100 hover:shadow-[0_8px_30px_rgba(0,0,0,0.12)] transition-all duration-300 cursor-pointer group h-full flex flex-col">
+                  <div className="relative aspect-[16/10] overflow-hidden">
                     <img
                       src={project.image}
                       alt={project.title}
-                      className="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
+                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                     />
-                    <div className="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                       <span className="px-6 py-2 bg-white/90 backdrop-blur-sm text-blue-600 rounded-full font-semibold shadow-lg scale-90 group-hover:scale-100 transition-transform duration-300 border border-blue-100">
-                         View Details
-                       </span>
-                    </div>
                   </div>
 
-                  <div className="p-8 flex flex-col flex-grow">
-                    <h3 className="text-2xl font-bold text-gray-800 mb-4 group-hover:text-blue-600 transition-colors">
+                  <div className="p-6 flex flex-col flex-grow">
+                    <h3 className="text-2xl font-bold text-[#1a2b3c] mb-3 group-hover:text-blue-600 transition-colors">
                       {project.title}
                     </h3>
-                    <p className="text-gray-600 mb-6 line-clamp-3 text-lg leading-relaxed flex-grow">
+                    <p className="text-gray-600 mb-6 line-clamp-3 text-base leading-relaxed flex-grow">
                       {project.description}
                     </p>
 
@@ -110,7 +107,7 @@ export default function Projects() {
                       {project.tags.map((tag, idx) => (
                         <span
                           key={idx}
-                          className="px-4 py-1.5 bg-blue-50 text-blue-600 text-sm rounded-full font-medium border border-blue-100"
+                          className="px-4 py-1.5 bg-[#f0f7ff] text-[#0066cc] text-sm rounded-full font-medium"
                         >
                           {tag}
                         </span>
@@ -121,7 +118,7 @@ export default function Projects() {
               </Link>
             </motion.div>
           ))}
-        </motion.div>
+        </div>
       </div>
     </section>
   );
