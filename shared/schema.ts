@@ -118,15 +118,15 @@ export const projects: Project[] = [
     name: "Barrel Born Digital Menu",
     shortDescription: "A sophisticated digital menu platform for Barrel Born, enhancing guest engagement and operational efficiency.",
     fullDescription: "A high-performance digital menu ecosystem designed for Barrel Born. The platform offers an interactive and visually appealing menu experience, allowing guests to explore culinary offerings with ease. Integrated with modern web technologies, it ensures seamless updates and a premium digital presence for the brand.",
-    imageUrl: "/attached_assets/barrelborn.airavatatechnologies.com_(iPhone_14_Pro_Max)_176760_1768561455685.png",
+    imageUrl: "/attached_assets/barrelborn.airavatatechnologies.com_(iPhone_14_Pro_Max)_1767605011722.png",
     galleryImages: [
-      "/attached_assets/barrelborn.airavatatechnologies.com_(iPhone_14_Pro_Max)_176760_1768561455685.png",
-      "/attached_assets/barrelborn.airavatatechnologies.com_(iPhone_14_Pro_Max)_(2)_17_1768561455688.png",
-      "/attached_assets/barrelborn.airavatatechnologies.com_(iPhone_14_Pro_Max)_(3)_17_1768561455688.png",
-      "/attached_assets/barrelborn.airavatatechnologies.com_(iPhone_14_Pro_Max)_(4)_17_1768561455687.png",
-      "/attached_assets/barrelborn.airavatatechnologies.com_(iPhone_14_Pro_Max)_(5)_17_1768561455687.png",
-      "/attached_assets/barrelborn.airavatatechnologies.com_(iPhone_14_Pro_Max)_(6)_17_1768561455686.png",
-      "/attached_assets/barrelborn.airavatatechnologies.com_(iPhone_14_Pro_Max)_(7)_17_1768561455684.png"
+      "/attached_assets/barrelborn.airavatatechnologies.com_(iPhone_14_Pro_Max)_1767605011722.png",
+      "/attached_assets/barrelborn.airavatatechnologies.com_(iPhone_14_Pro_Max)_(2)_1767605011723.png",
+      "/attached_assets/barrelborn.airavatatechnologies.com_(iPhone_14_Pro_Max)_(3)_1767605011724.png",
+      "/attached_assets/barrelborn.airavatatechnologies.com_(iPhone_14_Pro_Max)_(4)_1767605011724.png",
+      "/attached_assets/barrelborn.airavatatechnologies.com_(iPhone_14_Pro_Max)_(5)_1767605011724.png",
+      "/attached_assets/barrelborn.airavatatechnologies.com_(iPhone_14_Pro_Max)_(6)_1767605011725.png",
+      "/attached_assets/barrelborn.airavatatechnologies.com_(iPhone_14_Pro_Max)_(7)_1767605011725.png"
     ],
     clientName: "Barrel Born",
     clientIndustry: "Hospitality / F&B",
