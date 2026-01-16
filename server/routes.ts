@@ -203,7 +203,16 @@ export async function registerRoutes(app: Express): Promise<Server> {
     try {
       const db = await getDb();
       const { slug } = req.body;
-      const result = await db.collection("projects").deleteOne({ slug });
+      
+      // Delete any project with this slug or similar name
+      const result = await db.collection("projects").deleteMany({ 
+        $or: [
+          { slug: slug },
+          { name: { $regex: new RegExp(`^${slug.replace(/-/g, ' ')}$`, 'i') } }
+        ]
+      });
+      
+      console.log(`[API] Deleted ${result.deletedCount} projects matching slug: ${slug}`);
       res.json({ success: true, deletedCount: result.deletedCount });
     } catch (error) {
       console.error("Delete error:", error);
