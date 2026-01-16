@@ -84,9 +84,16 @@ export async function registerRoutes(app: Express): Promise<Server> {
         // Comprehensive field mapping to support multiple sources/field naming conventions
         const galleryImages = Array.isArray(p.galleryImages) && p.galleryImages.length > 0 ? p.galleryImages : 
                              (Array.isArray(p.images) && p.images.length > 0 ? p.images : 
-                             (Array.isArray(p.gallery) && p.gallery.length > 0 ? p.gallery : []));
+                             (Array.isArray(p.gallery) && p.gallery.length > 0 ? p.gallery : 
+                             (p.gallery_images && Array.isArray(p.gallery_images) ? p.gallery_images : [])));
                              
         const imageUrl = p.imageUrl || p.image || p.image_url || p.thumbnail || p.cover || (galleryImages.length > 0 ? galleryImages[0] : "");
+
+        // FORCED FIX FOR BARREL BORN FILENAME MISMATCH
+        let finalImageUrl = imageUrl;
+        if (p.name === "Barrel Born Digital Menu" || p.slug === "barrel-born-digital-menu") {
+          finalImageUrl = "/attached_assets/barrelborn.airavatatechnologies.com_(iPhone_14_Pro_Max)_176760_1768561455685.png";
+        }
 
         // Log project mapping for debugging
         if (p.name === "Barrel Born Digital Menu") {
@@ -102,8 +109,12 @@ export async function registerRoutes(app: Express): Promise<Server> {
           ...p, 
           id,
           serviceId,
-          imageUrl,
-          galleryImages,
+          imageUrl: finalImageUrl,
+          galleryImages: galleryImages.map(img => 
+            (p.name === "Barrel Born Digital Menu" && img.includes("1767605011722")) 
+            ? "/attached_assets/barrelborn.airavatatechnologies.com_(iPhone_14_Pro_Max)_176760_1768561455685.png" 
+            : img
+          ),
           // Support for other common fields
           description: p.description || p.fullDescription || p.detail || "",
           technologies: p.technologies || p.techStack || p.tech || [],
