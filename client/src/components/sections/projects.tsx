@@ -76,7 +76,8 @@ export default function Projects() {
           />
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
+        {/* Change to 2 column grid for md/lg screens */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-16 max-w-6xl mx-auto">
           {projects.map((project, index) => (
             <motion.div
               key={project.id}
@@ -86,8 +87,8 @@ export default function Projects() {
               viewport={{ once: true }}
             >
               <Link href={`/projects/${project.serviceSlug}/${project.id}`}>
-                <div className="bg-white rounded-xl shadow-[0_4px_20px_rgba(0,0,0,0.08)] overflow-hidden border border-gray-100 hover:shadow-[0_8px_30px_rgba(0,0,0,0.12)] transition-all duration-300 cursor-pointer group h-full flex flex-col">
-                  <div className="relative aspect-[16/10] overflow-hidden">
+                <div className="bg-white rounded-xl overflow-hidden cursor-pointer group flex flex-col">
+                  <div className="relative aspect-[16/10] overflow-hidden rounded-xl border border-gray-100 shadow-sm transition-all duration-500 group-hover:shadow-md">
                     <img
                       src={project.image}
                       alt={project.title}
@@ -95,7 +96,7 @@ export default function Projects() {
                     />
                   </div>
 
-                  <div className="p-6 flex flex-col flex-grow">
+                  <div className="pt-6 flex flex-col flex-grow">
                     <h3 className="text-2xl font-bold text-[#1a2b3c] mb-3 group-hover:text-blue-600 transition-colors">
                       {project.title}
                     </h3>
