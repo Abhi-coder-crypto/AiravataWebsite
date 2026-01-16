@@ -111,5 +111,32 @@ export const projects: Project[] = [
     technologies: ["React", "TypeScript", "Tailwind CSS"],
     features: ["Custom Training Programs"],
     outcomes: ["2,000+ Clients Transformed"],
+  },
+  {
+    id: "w-barrelborn-digital-menu",
+    serviceId: "1",
+    name: "Barrel Born Digital Menu",
+    shortDescription: "A custom digital menu solution for 'Barrel Born'.",
+    fullDescription: "A sophisticated digital menu platform designed to enhance the dining experience through interactive and visually appealing menu presentation.",
+    imageUrl: "/attached_assets/barrelborn.airavatatechnologies.com_(iPhone_14_Pro_Max)_176760_1768561455685.png",
+    galleryImages: [
+      "/attached_assets/barrelborn.airavatatechnologies.com_(iPhone_14_Pro_Max)_176760_1768561455685.png",
+      "/attached_assets/barrelborn.airavatatechnologies.com_(iPhone_14_Pro_Max)_(2)_17_1768561455688.png",
+      "/attached_assets/barrelborn.airavatatechnologies.com_(iPhone_14_Pro_Max)_(3)_17_1768561455688.png",
+      "/attached_assets/barrelborn.airavatatechnologies.com_(iPhone_14_Pro_Max)_176760_1768561455685.png",
+      "/attached_assets/barrelborn.airavatatechnologies.com_(iPhone_14_Pro_Max)_(2)_17_1768561455688.png",
+      "/attached_assets/barrelborn.airavatatechnologies.com_(iPhone_14_Pro_Max)_(3)_17_1768561455688.png",
+      "/attached_assets/barrelborn.airavatatechnologies.com_(iPhone_14_Pro_Max)_176760_1768561455685.png"
+    ],
+    clientName: "Barrel Born",
+    clientIndustry: "Hospitality & Dining",
+    clientLocation: "Mumbai, India",
+    websiteUrl: "https://barrelborn.com/",
+    duration: "4 weeks",
+    completedDate: "January 2026",
+    technologies: ["React", "TypeScript", "Tailwind CSS", "MongoDB"],
+    features: ["Interactive Digital Menu", "Real-time Updates", "Mobile-first Design"],
+    outcomes: ["Improved Guest Experience", "Efficient Menu Management"],
+    isMobileFirst: true,
   }
 ];
