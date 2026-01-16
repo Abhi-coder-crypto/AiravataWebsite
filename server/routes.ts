@@ -94,6 +94,18 @@ export async function registerRoutes(app: Express): Promise<Server> {
         if (p.name === "Barrel Born Digital Menu" || p.slug === "barrel-born-digital-menu") {
           finalImageUrl = "/attached_assets/barrelborn.airavatatechnologies.com_(iPhone_14_Pro_Max)_176760_1768561455685.png";
         }
+        
+        const fixImg = (img: string) => {
+          if (p.name !== "Barrel Born Digital Menu") return img;
+          if (img.includes("1767605011722")) return "/attached_assets/barrelborn.airavatatechnologies.com_(iPhone_14_Pro_Max)_176760_1768561455685.png";
+          if (img.includes("(2)_1767605011723")) return "/attached_assets/barrelborn.airavatatechnologies.com_(iPhone_14_Pro_Max)_(2)_17_1768561455688.png";
+          if (img.includes("(3)_1767605011724")) return "/attached_assets/barrelborn.airavatatechnologies.com_(iPhone_14_Pro_Max)_(3)_17_1768561455688.png";
+          if (img.includes("(4)_1767605011724")) return "/attached_assets/barrelborn.airavatatechnologies.com_(iPhone_14_Pro_Max)_(4)_17_1768561455687.png";
+          if (img.includes("(5)_1767605011724")) return "/attached_assets/barrelborn.airavatatechnologies.com_(iPhone_14_Pro_Max)_(5)_17_1768561455687.png";
+          if (img.includes("(6)_1767605011725")) return "/attached_assets/barrelborn.airavatatechnologies.com_(iPhone_14_Pro_Max)_(6)_17_1768561455686.png";
+          if (img.includes("(7)_1767605011725")) return "/attached_assets/barrelborn.airavatatechnologies.com_(iPhone_14_Pro_Max)_(7)_17_1768561455684.png";
+          return img;
+        };
 
         // Log project mapping for debugging
         if (p.name === "Barrel Born Digital Menu") {
@@ -110,11 +122,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
           id,
           serviceId,
           imageUrl: finalImageUrl,
-          galleryImages: galleryImages.map(img => 
-            (p.name === "Barrel Born Digital Menu" && img.includes("1767605011722")) 
-            ? "/attached_assets/barrelborn.airavatatechnologies.com_(iPhone_14_Pro_Max)_176760_1768561455685.png" 
-            : img
-          ),
+          galleryImages: galleryImages.map(fixImg),
           // Support for other common fields
           description: p.description || p.fullDescription || p.detail || "",
           technologies: p.technologies || p.techStack || p.tech || [],
