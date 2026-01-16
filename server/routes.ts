@@ -153,7 +153,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
           id: project._id.toString(), 
           serviceId: project.serviceId?.toString(),
           imageUrl: project.imageUrl || project.image || project.image_url,
-          galleryImages: project.galleryImages || project.images || []
+          galleryImages: project.galleryImages || project.images || project.gallery || []
         });
       }
     } catch (e) {
@@ -188,7 +188,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
           id: project._id.toString(), 
           serviceId: project.serviceId?.toString(),
           imageUrl: project.imageUrl || project.image || project.image_url,
-          galleryImages: project.galleryImages || project.images || []
+          galleryImages: project.galleryImages || project.images || project.gallery || []
         });
       }
     } catch (e) {
@@ -197,6 +197,20 @@ export async function registerRoutes(app: Express): Promise<Server> {
     const project = projects.find(p => p.id === req.params.projectId);
     if (!project) return res.status(404).send("Project not found");
     res.json(project);
+  });
+
+  app.post("/api/projects/sync-images", async (req, res) => {
+    try {
+      const db = await getDb();
+      const { slug, image, gallery } = req.body;
+      const result = await db.collection("projects").updateOne(
+        { slug },
+        { $set: { image, gallery } }
+      );
+      res.json({ success: true, result });
+    } catch (error) {
+      res.status(500).json({ error: "Failed to sync images" });
+    }
   });
 
   const httpServer = createServer(app);

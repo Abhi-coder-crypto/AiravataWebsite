@@ -21,10 +21,10 @@ export default function Projects() {
       serviceSlug: "website-development"
     },
     {
-      id: "malay-damania",
-      title: "Malay Damania",
-      description: "Professional personal branding and consulting platform for business growth consultant Malay Damania.",
-      image: "/attached_assets/Screenshot_2026-01-05_at_1.15.52_AM_1767555957565.png",
+      id: "barrel-born-e-commerce",
+      title: "Barrel Born",
+      description: "A specialized e-commerce platform for Barrel Born, focusing on a unique shopping experience and custom product management.",
+      image: "/attached_assets/image_1765458288537.png",
       tags: ["React", "TypeScript", "Tailwind CSS", "Node.js", "Express.js", "MongoDB"],
       serviceSlug: "website-development"
     },
