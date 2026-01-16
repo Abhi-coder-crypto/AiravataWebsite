@@ -24,7 +24,7 @@ export default function Projects() {
       id: "barrel-born-e-commerce",
       title: "Barrel Born",
       description: "A specialized e-commerce platform for Barrel Born, focusing on a unique shopping experience and custom product management.",
-      image: "/attached_assets/image_1765458288537.png",
+      image: "/attached_assets/image_1768551213838.png",
       tags: ["React", "TypeScript", "Tailwind CSS", "Node.js", "Express.js", "MongoDB"],
       serviceSlug: "website-development"
     },
