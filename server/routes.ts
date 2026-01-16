@@ -88,6 +88,16 @@ export async function registerRoutes(app: Express): Promise<Server> {
                              
         const imageUrl = p.imageUrl || p.image || p.image_url || p.thumbnail || p.cover || (galleryImages.length > 0 ? galleryImages[0] : "");
 
+        // Log project mapping for debugging
+        if (p.name === "Barrel Born Digital Menu") {
+          console.log(`[API] Mapping project Barrel Born Digital Menu:`, {
+            id,
+            imageUrl,
+            galleryCount: galleryImages.length,
+            galleryFirst: galleryImages[0]
+          });
+        }
+
         return { 
           ...p, 
           id,
