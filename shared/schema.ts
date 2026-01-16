@@ -123,13 +123,10 @@ export const projects: Project[] = [
       "/attached_assets/barrelborn.airavatatechnologies.com_(iPhone_14_Pro_Max)_176760_1768561455685.png",
       "/attached_assets/barrelborn.airavatatechnologies.com_(iPhone_14_Pro_Max)_(2)_17_1768561455688.png",
       "/attached_assets/barrelborn.airavatatechnologies.com_(iPhone_14_Pro_Max)_(3)_17_1768561455688.png",
-      "/attached_assets/barrelborn.airavatatechnologies.com_(iPhone_14_Pro_Max)_1767605011722.png",
-      "/attached_assets/barrelborn.airavatatechnologies.com_(iPhone_14_Pro_Max)_(2)_1767605011723.png",
-      "/attached_assets/barrelborn.airavatatechnologies.com_(iPhone_14_Pro_Max)_(3)_1767605011724.png",
-      "/attached_assets/barrelborn.airavatatechnologies.com_(iPhone_14_Pro_Max)_(4)_1767605011724.png",
-      "/attached_assets/barrelborn.airavatatechnologies.com_(iPhone_14_Pro_Max)_(5)_1767605011724.png",
-      "/attached_assets/barrelborn.airavatatechnologies.com_(iPhone_14_Pro_Max)_(6)_1767605011725.png",
-      "/attached_assets/barrelborn.airavatatechnologies.com_(iPhone_14_Pro_Max)_(7)_1767605011725.png"
+      "/attached_assets/barrelborn.airavatatechnologies.com_(iPhone_14_Pro_Max)_(4)_17_1768561455687.png",
+      "/attached_assets/barrelborn.airavatatechnologies.com_(iPhone_14_Pro_Max)_(5)_17_1768561455687.png",
+      "/attached_assets/barrelborn.airavatatechnologies.com_(iPhone_14_Pro_Max)_(6)_17_1768561455686.png",
+      "/attached_assets/barrelborn.airavatatechnologies.com_(iPhone_14_Pro_Max)_(7)_17_1768561455684.png"
     ],
     clientName: "Barrel Born",
     clientIndustry: "Hospitality / F&B",
