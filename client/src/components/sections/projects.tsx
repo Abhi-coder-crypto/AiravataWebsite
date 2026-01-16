@@ -32,7 +32,7 @@ export default function Projects() {
       id: "prism-post-production-management-system",
       title: "PRISM Post Production Management System",
       description: "PRISM - ERP for post-production houses to handle booking, resources, and project tracking.",
-      image: "/attached_assets/Screenshot_2026-01-16_132311_1768550004333.png",
+      image: "/attached_assets/Screenshot_2026-01-15_at_8.57.38_PM_1768490862776.png",
       tags: ["React", "Node.js", "MongoDB", "Tailwind CSS"],
       serviceSlug: "software-development"
     },
@@ -40,7 +40,7 @@ export default function Projects() {
       id: "pos-restaurant-billing-software",
       title: "POS Restaurant Billing Software",
       description: "A comprehensive Point of Sale system tailored for restaurants with billing and inventory management.",
-      image: "/attached_assets/Screenshot_2026-01-16_132316_1768550004333.png",
+      image: "/attached_assets/Screenshot_2026-01-16_132311_1768550004333.png",
       tags: ["React", "Node.js", "MongoDB", "Tailwind CSS"],
       serviceSlug: "software-development"
     },
@@ -48,7 +48,7 @@ export default function Projects() {
       id: "online-training-gym-management-system",
       title: "Online Training/Gym Management System",
       description: "A comprehensive multi-role dashboard for gym owners, trainers, and clients to manage workouts and memberships.",
-      image: "/attached_assets/image_1768549942313.png",
+      image: "/attached_assets/Screenshot_2026-01-16_132316_1768550004333.png",
       tags: ["React", "Node.js", "MongoDB", "Tailwind CSS"],
       serviceSlug: "software-development"
     }
