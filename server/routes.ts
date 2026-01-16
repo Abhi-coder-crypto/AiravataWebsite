@@ -96,14 +96,36 @@ export async function registerRoutes(app: Express): Promise<Server> {
         }
         
         const fixImg = (img: string) => {
-          if (p.name !== "Barrel Born Digital Menu") return img;
+          if (p.name !== "Barrel Born Digital Menu" && p.slug !== "barrel-born-digital-menu") return img;
+          
+          // Debug log to see what we are getting
+          console.log(`[FIXIMG] Processing: ${img}`);
+          
+          if (!img) return "/attached_assets/barrelborn.airavatatechnologies.com_(iPhone_14_Pro_Max)_176760_1768561455685.png";
+          
           if (img.includes("1767605011722")) return "/attached_assets/barrelborn.airavatatechnologies.com_(iPhone_14_Pro_Max)_176760_1768561455685.png";
-          if (img.includes("(2)_1767605011723")) return "/attached_assets/barrelborn.airavatatechnologies.com_(iPhone_14_Pro_Max)_(2)_17_1768561455688.png";
-          if (img.includes("(3)_1767605011724")) return "/attached_assets/barrelborn.airavatatechnologies.com_(iPhone_14_Pro_Max)_(3)_17_1768561455688.png";
-          if (img.includes("(4)_1767605011724")) return "/attached_assets/barrelborn.airavatatechnologies.com_(iPhone_14_Pro_Max)_(4)_17_1768561455687.png";
-          if (img.includes("(5)_1767605011724")) return "/attached_assets/barrelborn.airavatatechnologies.com_(iPhone_14_Pro_Max)_(5)_17_1768561455687.png";
-          if (img.includes("(6)_1767605011725")) return "/attached_assets/barrelborn.airavatatechnologies.com_(iPhone_14_Pro_Max)_(6)_17_1768561455686.png";
-          if (img.includes("(7)_1767605011725")) return "/attached_assets/barrelborn.airavatatechnologies.com_(iPhone_14_Pro_Max)_(7)_17_1768561455684.png";
+          if (img.includes("1767605011723")) return "/attached_assets/barrelborn.airavatatechnologies.com_(iPhone_14_Pro_Max)_(2)_17_1768561455688.png";
+          if (img.includes("1767605011724")) {
+            if (img.includes("(3)")) return "/attached_assets/barrelborn.airavatatechnologies.com_(iPhone_14_Pro_Max)_(3)_17_1768561455688.png";
+            if (img.includes("(4)")) return "/attached_assets/barrelborn.airavatatechnologies.com_(iPhone_14_Pro_Max)_(4)_17_1768561455687.png";
+            if (img.includes("(5)")) return "/attached_assets/barrelborn.airavatatechnologies.com_(iPhone_14_Pro_Max)_(5)_17_1768561455687.png";
+          }
+          if (img.includes("1767605011725")) {
+            if (img.includes("(6)")) return "/attached_assets/barrelborn.airavatatechnologies.com_(iPhone_14_Pro_Max)_(6)_17_1768561455686.png";
+            if (img.includes("(7)")) return "/attached_assets/barrelborn.airavatatechnologies.com_(iPhone_14_Pro_Max)_(7)_17_1768561455684.png";
+          }
+          
+          // Fallback check for any string containing part of the broken filenames
+          if (img.includes("Max)_176760") && !img.includes("_1768561455")) {
+             if (img.includes("(2)")) return "/attached_assets/barrelborn.airavatatechnologies.com_(iPhone_14_Pro_Max)_(2)_17_1768561455688.png";
+             if (img.includes("(3)")) return "/attached_assets/barrelborn.airavatatechnologies.com_(iPhone_14_Pro_Max)_(3)_17_1768561455688.png";
+             if (img.includes("(4)")) return "/attached_assets/barrelborn.airavatatechnologies.com_(iPhone_14_Pro_Max)_(4)_17_1768561455687.png";
+             if (img.includes("(5)")) return "/attached_assets/barrelborn.airavatatechnologies.com_(iPhone_14_Pro_Max)_(5)_17_1768561455687.png";
+             if (img.includes("(6)")) return "/attached_assets/barrelborn.airavatatechnologies.com_(iPhone_14_Pro_Max)_(6)_17_1768561455686.png";
+             if (img.includes("(7)")) return "/attached_assets/barrelborn.airavatatechnologies.com_(iPhone_14_Pro_Max)_(7)_17_1768561455684.png";
+             return "/attached_assets/barrelborn.airavatatechnologies.com_(iPhone_14_Pro_Max)_176760_1768561455685.png";
+          }
+          
           return img;
         };
 
@@ -122,7 +144,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
           id,
           serviceId,
           imageUrl: finalImageUrl,
-          galleryImages: galleryImages.map(fixImg),
+          galleryImages: galleryImages.map(fixImg).filter(img => img !== null && img !== undefined),
           // Support for other common fields
           description: p.description || p.fullDescription || p.detail || "",
           technologies: p.technologies || p.techStack || p.tech || [],
@@ -162,12 +184,12 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const db = await getDb();
       const projectId = req.params.projectId;
       
-      let project;
+      let p;
       if (ObjectId.isValid(projectId)) {
-        project = await db.collection("projects").findOne({ _id: new ObjectId(projectId) });
+        p = await db.collection("projects").findOne({ _id: new ObjectId(projectId) });
       } else {
         // Support lookup by slug if ID is not a valid ObjectId
-        project = await db.collection("projects").findOne({ 
+        p = await db.collection("projects").findOne({ 
           $or: [
             { slug: projectId },
             { name: { $regex: new RegExp(`^${projectId.replace(/-/g, ' ')}$`, 'i') } }
@@ -175,14 +197,56 @@ export async function registerRoutes(app: Express): Promise<Server> {
         });
       }
 
-      if (project) {
-        // Return all fields from MongoDB to the frontend
+      if (p) {
+        const id = p._id.toString();
+        const serviceId = p.serviceId?.toString() || "";
+        
+        // Comprehensive field mapping to support multiple sources/field naming conventions
+        const galleryImages = Array.isArray(p.galleryImages) && p.galleryImages.length > 0 ? p.galleryImages : 
+                             (Array.isArray(p.images) && p.images.length > 0 ? p.images : 
+                             (Array.isArray(p.gallery) && p.gallery.length > 0 ? p.gallery : 
+                             (p.gallery_images && Array.isArray(p.gallery_images) ? p.gallery_images : [])));
+                             
+        const imageUrl = p.imageUrl || p.image || p.image_url || p.thumbnail || p.cover || (galleryImages.length > 0 ? galleryImages[0] : "");
+
+        const fixImg = (img: string) => {
+          if (p.name !== "Barrel Born Digital Menu" && p.slug !== "barrel-born-digital-menu") return img;
+          if (!img) return "/attached_assets/barrelborn.airavatatechnologies.com_(iPhone_14_Pro_Max)_176760_1768561455685.png";
+          
+          if (img.includes("1767605011722")) return "/attached_assets/barrelborn.airavatatechnologies.com_(iPhone_14_Pro_Max)_176760_1768561455685.png";
+          if (img.includes("1767605011723")) return "/attached_assets/barrelborn.airavatatechnologies.com_(iPhone_14_Pro_Max)_(2)_17_1768561455688.png";
+          if (img.includes("1767605011724")) {
+            if (img.includes("(3)")) return "/attached_assets/barrelborn.airavatatechnologies.com_(iPhone_14_Pro_Max)_(3)_17_1768561455688.png";
+            if (img.includes("(4)")) return "/attached_assets/barrelborn.airavatatechnologies.com_(iPhone_14_Pro_Max)_(4)_17_1768561455687.png";
+            if (img.includes("(5)")) return "/attached_assets/barrelborn.airavatatechnologies.com_(iPhone_14_Pro_Max)_(5)_17_1768561455687.png";
+          }
+          if (img.includes("1767605011725")) {
+            if (img.includes("(6)")) return "/attached_assets/barrelborn.airavatatechnologies.com_(iPhone_14_Pro_Max)_(6)_17_1768561455686.png";
+            if (img.includes("(7)")) return "/attached_assets/barrelborn.airavatatechnologies.com_(iPhone_14_Pro_Max)_(7)_17_1768561455684.png";
+          }
+          
+          if (img.includes("Max)_176760") && !img.includes("_1768561455")) {
+             if (img.includes("(2)")) return "/attached_assets/barrelborn.airavatatechnologies.com_(iPhone_14_Pro_Max)_(2)_17_1768561455688.png";
+             if (img.includes("(3)")) return "/attached_assets/barrelborn.airavatatechnologies.com_(iPhone_14_Pro_Max)_(3)_17_1768561455688.png";
+             if (img.includes("(4)")) return "/attached_assets/barrelborn.airavatatechnologies.com_(iPhone_14_Pro_Max)_(4)_17_1768561455687.png";
+             if (img.includes("(5)")) return "/attached_assets/barrelborn.airavatatechnologies.com_(iPhone_14_Pro_Max)_(5)_17_1768561455687.png";
+             if (img.includes("(6)")) return "/attached_assets/barrelborn.airavatatechnologies.com_(iPhone_14_Pro_Max)_(6)_17_1768561455686.png";
+             if (img.includes("(7)")) return "/attached_assets/barrelborn.airavatatechnologies.com_(iPhone_14_Pro_Max)_(7)_17_1768561455684.png";
+             return "/attached_assets/barrelborn.airavatatechnologies.com_(iPhone_14_Pro_Max)_176760_1768561455685.png";
+          }
+          
+          return img;
+        };
+
+        // FORCED FIX FOR BARREL BORN FILENAME MISMATCH
+        let finalImageUrl = fixImg(imageUrl);
+
         return res.json({ 
-          ...project, 
-          id: project._id.toString(), 
-          serviceId: project.serviceId?.toString(),
-          imageUrl: project.imageUrl || project.image || project.image_url,
-          galleryImages: project.galleryImages || project.images || project.gallery || []
+          ...p, 
+          id, 
+          serviceId,
+          imageUrl: finalImageUrl,
+          galleryImages: galleryImages.map(fixImg).filter(img => img !== null && img !== undefined)
         });
       }
     } catch (e) {
@@ -198,12 +262,12 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const db = await getDb();
       const projectId = req.params.projectId;
 
-      let project;
+      let p;
       if (ObjectId.isValid(projectId)) {
-        project = await db.collection("projects").findOne({ _id: new ObjectId(projectId) });
+        p = await db.collection("projects").findOne({ _id: new ObjectId(projectId) });
       } else {
         // Support lookup by slug if ID is not a valid ObjectId
-        project = await db.collection("projects").findOne({ 
+        p = await db.collection("projects").findOne({ 
           $or: [
             { slug: projectId },
             { name: { $regex: new RegExp(`^${projectId.replace(/-/g, ' ')}$`, 'i') } }
@@ -211,13 +275,56 @@ export async function registerRoutes(app: Express): Promise<Server> {
         });
       }
 
-      if (project) {
+      if (p) {
+        const id = p._id.toString();
+        const serviceId = p.serviceId?.toString() || "";
+        
+        // Comprehensive field mapping to support multiple sources/field naming conventions
+        const galleryImages = Array.isArray(p.galleryImages) && p.galleryImages.length > 0 ? p.galleryImages : 
+                             (Array.isArray(p.images) && p.images.length > 0 ? p.images : 
+                             (Array.isArray(p.gallery) && p.gallery.length > 0 ? p.gallery : 
+                             (p.gallery_images && Array.isArray(p.gallery_images) ? p.gallery_images : [])));
+                             
+        const imageUrl = p.imageUrl || p.image || p.image_url || p.thumbnail || p.cover || (galleryImages.length > 0 ? galleryImages[0] : "");
+
+        const fixImg = (img: string) => {
+          if (p.name !== "Barrel Born Digital Menu" && p.slug !== "barrel-born-digital-menu") return img;
+          if (!img) return "/attached_assets/barrelborn.airavatatechnologies.com_(iPhone_14_Pro_Max)_176760_1768561455685.png";
+          
+          if (img.includes("1767605011722")) return "/attached_assets/barrelborn.airavatatechnologies.com_(iPhone_14_Pro_Max)_176760_1768561455685.png";
+          if (img.includes("1767605011723")) return "/attached_assets/barrelborn.airavatatechnologies.com_(iPhone_14_Pro_Max)_(2)_17_1768561455688.png";
+          if (img.includes("1767605011724")) {
+            if (img.includes("(3)")) return "/attached_assets/barrelborn.airavatatechnologies.com_(iPhone_14_Pro_Max)_(3)_17_1768561455688.png";
+            if (img.includes("(4)")) return "/attached_assets/barrelborn.airavatatechnologies.com_(iPhone_14_Pro_Max)_(4)_17_1768561455687.png";
+            if (img.includes("(5)")) return "/attached_assets/barrelborn.airavatatechnologies.com_(iPhone_14_Pro_Max)_(5)_17_1768561455687.png";
+          }
+          if (img.includes("1767605011725")) {
+            if (img.includes("(6)")) return "/attached_assets/barrelborn.airavatatechnologies.com_(iPhone_14_Pro_Max)_(6)_17_1768561455686.png";
+            if (img.includes("(7)")) return "/attached_assets/barrelborn.airavatatechnologies.com_(iPhone_14_Pro_Max)_(7)_17_1768561455684.png";
+          }
+          
+          if (img.includes("Max)_176760") && !img.includes("_1768561455")) {
+             if (img.includes("(2)")) return "/attached_assets/barrelborn.airavatatechnologies.com_(iPhone_14_Pro_Max)_(2)_17_1768561455688.png";
+             if (img.includes("(3)")) return "/attached_assets/barrelborn.airavatatechnologies.com_(iPhone_14_Pro_Max)_(3)_17_1768561455688.png";
+             if (img.includes("(4)")) return "/attached_assets/barrelborn.airavatatechnologies.com_(iPhone_14_Pro_Max)_(4)_17_1768561455687.png";
+             if (img.includes("(5)")) return "/attached_assets/barrelborn.airavatatechnologies.com_(iPhone_14_Pro_Max)_(5)_17_1768561455687.png";
+             if (img.includes("(6)")) return "/attached_assets/barrelborn.airavatatechnologies.com_(iPhone_14_Pro_Max)_(6)_17_1768561455686.png";
+             if (img.includes("(7)")) return "/attached_assets/barrelborn.airavatatechnologies.com_(iPhone_14_Pro_Max)_(7)_17_1768561455684.png";
+             return "/attached_assets/barrelborn.airavatatechnologies.com_(iPhone_14_Pro_Max)_176760_1768561455685.png";
+          }
+          
+          return img;
+        };
+
+        // FORCED FIX FOR BARREL BORN FILENAME MISMATCH
+        let finalImageUrl = fixImg(imageUrl);
+
         return res.json({ 
-          ...project, 
-          id: project._id.toString(), 
-          serviceId: project.serviceId?.toString(),
-          imageUrl: project.imageUrl || project.image || project.image_url,
-          galleryImages: project.galleryImages || project.images || project.gallery || []
+          ...p, 
+          id, 
+          serviceId,
+          imageUrl: finalImageUrl,
+          galleryImages: galleryImages.map(fixImg).filter(img => img !== null && img !== undefined)
         });
       }
     } catch (e) {
